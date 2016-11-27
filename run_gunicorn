@@ -1,1 +1,1 @@
-gunicorn SubsDB.wsgi:application --bind 0.0.0.0:8001
+gunicorn SubsDB.wsgi:application --bind 0.0.0.0:8001 -k gevent
