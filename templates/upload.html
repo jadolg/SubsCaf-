@@ -1,0 +1,27 @@
+{% extends 'base_search.html' %}
+
+{% block body %}
+    <div class="col-md-12" style="margin-top: 50px; margin-bottom: 10px">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 centered" style="color: white" >
+            Puedes subir tanto ficheros de subtítulos individualmente como comprimidos '.zip' de una carpeta de subtítulos. Anímate y comparte!
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+    <div class="col-md-12" >
+            <div class="col-md-3"></div>
+            <div class="col-md-6 centered" >
+                <form class="form-search" action="/upload" method="post" enctype="multipart/form-data">
+                    <div class="input-group panel" >
+                        <input class="file-upload" type="file" placeholder="fichero" name="afile" style="color: black; width: 400px" >
+                        <span class="input-group-addon">.sr<span id="transmark" style="display: none; width: 0px; height: 0px;"></span>t | .sub | .ass | .zip</span>
+                    </div>
+                    {% csrf_token %}
+                    <div class="input-group pull-right" style="margin-top: 5px"><button type="submit" class="btn btn-warning"><i class="fa fa-upload"></i></button></div>
+                </form>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+{% endblock %}
+{% block uploadbutton %}
+{% endblock %}

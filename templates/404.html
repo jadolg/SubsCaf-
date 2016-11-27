@@ -1,0 +1,14 @@
+{% extends 'base_search.html' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row" style="margin-top: 100px"></div>
+        {% if subs|length == 0 %}
+            <div class="col-md-3"></div>
+            <div class="col-md-8">
+                <h2 style="color: white">404. Esta página no existe <i class="fa fa-frown-o"></i></h2>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}
