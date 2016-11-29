@@ -149,8 +149,23 @@ def unzip_all(azipfile, ext_path):
     zf = zipfile.ZipFile(azipfile, 'r')
     for m in zf.infolist():
         data = zf.read(m)
+        #this is not a solution
+        #Fix this properly
+        try:
+            print ext_path + '/' + unicodedata.normalize('NFKD', unicode(m.filename)).encode('ascii', 'ignore')
+            disk_file_name = ext_path + '/' + unicodedata.normalize('NFKD', unicode(m.filename)).encode('ascii',
+                                                                                                        'ignore')
+        except:
+            print 'unicode error'
+
+        try:
+            print ext_path + '/' + m.filename.decode('unicode_escape').encode('ascii', 'ignore')
+            disk_file_name = ext_path + '/' + m.filename.decode('unicode_escape').encode('ascii', 'ignore')
+        except:
+            print 'unicode error 2'
+
         # disk_file_name = ext_path+'/'+ m.filename.decode('unicode_escape').encode('ascii','ignore')
-        disk_file_name = ext_path + '/' + unicodedata.normalize('NFKD', unicode(m.filename)).encode('ascii', 'ignore')
+        #disk_file_name = ext_path + '/' + unicodedata.normalize('NFKD', unicode(m.filename)).encode('ascii', 'ignore')
         dir_name = os.path.dirname(disk_file_name)
         try:
             os.makedirs(dir_name)
