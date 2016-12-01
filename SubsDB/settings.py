@@ -24,7 +24,7 @@ SECRET_KEY = 'c18gqkmbfu2pi68v)*jlger3$9kxkdzaz_&mu8zq=wm1)y31hi'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-TMP_FOLDER = './tmp'
+TMP_FOLDER = './tmp/'
 STASH_FOLDER = './SubsStash/'
 
 ALLOWED_HOSTS = ['*',]
