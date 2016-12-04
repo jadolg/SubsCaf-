@@ -21,7 +21,11 @@
                     <div class="col-md-1"><a href="/download/{{ sub.id }}" style="margin-top: 5px; margin-bottom: 5px;" class="btn btn-danger"><i
                             class="fa fa-download"></i></a></div>
                 </div>
-                <div class="col-md-2"></div>
+                {% if sub == subs.0 %}
+                    <div class="col-md-2"><div class="badge pull-right" style="background-color: firebrick; margin-top: 10px"> {{ subs_total }} <i class="fa fa-comments"></i></div></div>
+                {% else %}
+                    <div class="col-md-2"></div>
+                {% endif %}
             </div>
         {% endfor %}
         {% if subs.has_previous or subs.has_next %}

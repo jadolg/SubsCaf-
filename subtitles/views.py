@@ -27,8 +27,9 @@ from subtitles.util import id_generator
 EXTENSIONES = ['.srt', '.sub', '.ass', '.zip']
 mime = magic.Magic(mime=True)
 
+
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'index.html', {'total_subs':Subtitulo.objects.count()})
 
 
 def search(request):
@@ -36,7 +37,8 @@ def search(request):
 
     if request.GET.has_key('q') and request.GET['q'] != '':
         q = request.GET['q']
-        paginator = Paginator(search_keywords(Subtitulo, q.split()), 10)
+        the_search = search_keywords(Subtitulo, q.split())
+        paginator = Paginator(the_search, 10)
         # paginator = Paginator(Subtitulo.objects.filter(nombre__search=q), 10)
         page = request.GET.get('page')
 
@@ -49,7 +51,7 @@ def search(request):
     else:
         return HttpResponseRedirect('/')
 
-    return render(request, 'search.html', {'subs': subs, 'search_term': q})
+    return render(request, 'search.html', {'subs': subs, 'search_term': q, 'subs_total': len(the_search)})
 
 
 def upload(request):
