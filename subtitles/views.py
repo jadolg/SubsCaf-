@@ -38,7 +38,7 @@ def search(request):
     if request.GET.has_key('q') and request.GET['q'] != '':
         q = request.GET['q']
         the_search = search_keywords(Subtitulo, q.split())
-        paginator = Paginator(the_search, 10)
+        paginator = Paginator(the_search, 30)
         # paginator = Paginator(Subtitulo.objects.filter(nombre__search=q), 10)
         page = request.GET.get('page')
 
