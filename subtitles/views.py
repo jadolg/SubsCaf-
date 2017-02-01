@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from os import remove, mkdir
 
 import operator
+from rest_framework.response import Response
 from rexec import FileWrapper
 
 import magic
@@ -19,6 +20,8 @@ import fnmatch
 import os
 from unidecode import unidecode
 import unicodedata
+
+from rest_framework.decorators import api_view
 
 from SubsDB.settings import TMP_FOLDER, STASH_FOLDER
 from subtitles.models import Subtitulo
@@ -207,3 +210,34 @@ def unzip_all(azipfile, ext_path):
             except:
                 pass
     zf.close()
+
+
+@api_view(['GET', ])
+def search_rest(request):
+    if request.GET.has_key('q') and request.GET['q'] != '':
+        result = []
+        q = request.GET['q']
+        the_search = search_keywords(Subtitulo, q.split())
+        base_url = get_url(request)
+        for search_result in the_search:
+            res = {
+                'nombre' : search_result.nombre,
+                'ruta' : base_url+'download/'+str(search_result.id),
+                'descargas' : search_result.descargas
+            }
+            result.append(res)
+        return Response({'error':0, 'mensaje':'Ok', 'resultado':result})
+    else:
+        return Response({'error':1, 'mensaje':'Debe especificar un parametro de busqueda (q)'})
+
+
+def get_url(request):
+    url = ''
+    if request.is_secure():
+        url += 'https://'
+    else:
+        url += 'http://'
+
+    url += request.get_host() + '/'
+
+    return url

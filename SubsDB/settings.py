@@ -78,23 +78,23 @@ WSGI_APPLICATION = 'SubsDB.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "subscafe",
-        "USER": "root",
-        "PASSWORD":"qweqwe123",
-        # "HOST":"172.32.1.102"
-        "HOST":"127.0.0.1",
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.mysql",
+#         "NAME": "subscafe",
+#         "USER": "root",
+#         "PASSWORD":"qweqwe123",
+#         # "HOST":"172.32.1.102"
+#         "HOST":"127.0.0.1",
+#     }
+# }
 
 
 # Password validation
