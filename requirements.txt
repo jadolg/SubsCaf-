@@ -1,0 +1,4 @@
+python-magic==0.4.11
+Django>=1.8
+djangorestframework>=3.3.2
+Unidecode>=0.04.19
