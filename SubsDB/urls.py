@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from subtitles.views import index, search, upload, download, search_rest
+from subtitles.views import index, search, upload, download, search_rest, upload_rest
 
 urlpatterns = [
     url(r'^$', index),
@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^download/(?P<id>[0-9]+)$', download),
     url(r'^admin/', admin.site.urls),
     url(r'^api1/search', search_rest),
+    url(r'^api1/upload', upload_rest),
 ]

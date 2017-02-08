@@ -231,6 +231,41 @@ def search_rest(request):
         return Response({'error':1, 'mensaje':'Debe especificar un parametro de busqueda (q)'})
 
 
+@api_view(['POST', ])
+def upload_rest(request):
+        if request.FILES.has_key('afile'):
+            afile = request.FILES['afile']
+            fname, ext = splitext(afile.name)
+            rand_name = id_generator()
+            path = TMP_FOLDER + rand_name
+
+            with open(path, 'wb+') as destination:
+                for chunk in afile.chunks():
+                    destination.write(chunk)
+
+            if ext in EXTENSIONES:
+                d = open(path, "rb").read()
+
+                if mime.from_file(path) == 'text/plain':
+                    thash = sha256(d)
+                    sha = thash.hexdigest()
+
+                    if len(Subtitulo.objects.filter(ahash=sha)) > 0:
+                        return Response({'error': 1, 'mensaje': 'Duplicado'})
+                    else:
+                        copy(path, STASH_FOLDER + sha)
+                        remove(path)
+                        Subtitulo(nombre=unidecode(afile.name), ruta=sha, ahash=sha).save()
+                        return Response({'error': 0, 'mensaje': 'Agregado correctamente'})
+                else:
+                    return Response({'error': 1, 'mensaje': "Los tipos de fichero permitidos son .srt | .sub | .ass"})
+            else:
+                return Response({'error': 1, 'mensaje': "Los tipos de fichero permitidos son .srt | .sub | .ass"})
+        else:
+            return Response({'error': 1, 'mensaje': "No ha incluido ningún fichero"})
+
+
+
 def get_url(request):
     url = ''
     if request.is_secure():
