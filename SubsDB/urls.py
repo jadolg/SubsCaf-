@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from subtitles.subsfeed import LatestSubsFeed
 from subtitles.views import index, search, upload, download, search_rest, upload_rest
 
 urlpatterns = [
@@ -26,4 +27,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api1/search', search_rest),
     url(r'^api1/upload', upload_rest),
+    url(r'^feed/$', LatestSubsFeed()),
 ]

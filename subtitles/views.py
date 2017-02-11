@@ -97,7 +97,7 @@ def upload(request):
                                 if mime.from_file(i) == 'text/plain':
                                     if len(Subtitulo.objects.filter(ahash=sha)) == 0:
                                         copy(i, STASH_FOLDER + sha)
-                                        Subtitulo(nombre=unidecode(basename(i)), ruta=sha, ahash=sha).save()
+                                        Subtitulo(nombre=unidecode(basename(i)), ahash=sha).save()
                                         count += 1
 
                             messages.add_message(request, messages.SUCCESS,
@@ -124,7 +124,7 @@ def upload(request):
                             else:
                                 copy(path, STASH_FOLDER + sha)
                                 remove(path)
-                                Subtitulo(nombre=unidecode(afile.name), ruta=sha, ahash=sha).save()
+                                Subtitulo(nombre=unidecode(afile.name), ahash=sha).save()
                                 messages.add_message(request, messages.SUCCESS, "Subtítulo agregado correctamente")
                         else:
                             messages.add_message(request, messages.ERROR,
@@ -144,7 +144,7 @@ def download(request, id):
     subtitulo = Subtitulo.objects.get(id=id)
     subtitulo.descargas += 1
     subtitulo.save()
-    response = HttpResponse(FileWrapper(open(STASH_FOLDER + subtitulo.ruta, 'rb')),
+    response = HttpResponse(FileWrapper(open(STASH_FOLDER + subtitulo.ahash, 'rb')),
                             content_type='text/plain')
     nombre = '"' + subtitulo.nombre + '"'
 
@@ -255,7 +255,7 @@ def upload_rest(request):
                     else:
                         copy(path, STASH_FOLDER + sha)
                         remove(path)
-                        Subtitulo(nombre=unidecode(afile.name), ruta=sha, ahash=sha).save()
+                        Subtitulo(nombre=unidecode(afile.name), ahash=sha).save()
                         return Response({'error': 0, 'mensaje': 'Agregado correctamente'})
                 else:
                     return Response({'error': 1, 'mensaje': "Los tipos de fichero permitidos son .srt | .sub | .ass"})
