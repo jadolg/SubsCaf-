@@ -146,7 +146,7 @@ def download(request, id):
     subtitulo.save()
     response = HttpResponse(FileWrapper(open(STASH_FOLDER + subtitulo.ahash, 'rb')),
                             content_type='text/plain')
-    nombre = '"' + subtitulo.nombre + '"'
+    nombre = '"' + os.path.splitext(subtitulo.nombre)[0]+" - [subscafe.gntk.snet]"+os.path.splitext(subtitulo.nombre)[1] + '"'
 
     response['Content-Disposition'] = 'attachment; filename=' + nombre + ';'
     return response
